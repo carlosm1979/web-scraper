@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body markdown=1>
+  Get content from web:
+  <input type="text" id="url" >
+<button id="get_consent">Check</button>
+</body>
+<script>
+  var targetUrl = ''
+document.getElementsByTagName('input')[0].addEventListener('input', (e) => {
+  targetUrl = e.srcElement.value
+})
+
+ document.getElementsByTagName('button')[0].addEventListener('click',() => {
+   getContent(targetUrl)
+ })
+
+
+ function getContent(url) {
+  fetch('/api?type=markdown&url='+url)
+  .then(response => response.body)
+.then(rb => {
+  console.log(rb)
+  const reader = rb.getReader();
+
+  return new ReadableStream({
+    start(controller) {
+      // The following function handles each data chunk
+      function push() {
+        // "done" is a Boolean and value a "Uint8Array"
+        reader.read().then( ({done, value}) => {
+          // If there is no more data to read
+          if (done) {
+            console.log('done', done);
+            controller.close();
+            return;
+          }
+          // Get the data and send it to the browser via the controller
+          controller.enqueue(value);
+          // Check chunks by logging to the console
+          console.log(done, value);
+          push();
+        })
+      }
+
+      push();
+    }
+  });
+})
+.then(stream => {
+  // Respond with our stream
+  return new Response(stream, { headers: { "Content-Type": "text/html" } }).text();
+})
+.then(result => {
+  // Do things with result
+  try {
+    document.getElementsByClassName('document-content')[0].remove()
+  } finally {
+    const p = document.createElement('pre')
+  p.classList.add('document-content')
+  p.appendChild(document.createTextNode(result))
+  document.getElementsByTagName('body')[0].appendChild(p)
+  console.log(result);
+
+  }
+  
+  
+});
+ }
+
+
+</script>
+</html>
