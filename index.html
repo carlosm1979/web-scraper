@@ -10,6 +10,12 @@
   Get content from web:
   <input type="text" id="url" >
 <button id="get_consent">Check</button>
+<style>
+  .document-content{
+    white-space: pre-wrap;
+    word-break: break-all; 
+  }
+</style>
 </body>
 <script>
   var targetUrl = ''
@@ -62,7 +68,7 @@ document.getElementsByTagName('input')[0].addEventListener('input', (e) => {
   try {
     document.getElementsByClassName('document-content')[0].remove()
   } finally {
-    const p = document.createElement('pre')
+    const p = document.createElement('div')
   p.classList.add('document-content')
   p.appendChild(document.createTextNode(result))
   document.getElementsByTagName('body')[0].appendChild(p)
