@@ -29,7 +29,16 @@ document.getElementsByTagName('input')[0].addEventListener('input', (e) => {
 
 
  function getContent(url) {
-  fetch('/api?type=markdown&url='+url)
+  fetch('/api', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      type: 'markdown',
+      url
+    }) 
+  })
   .then(response => response.body)
 .then(rb => {
   console.log(rb)
@@ -69,16 +78,13 @@ document.getElementsByTagName('input')[0].addEventListener('input', (e) => {
     document.getElementsByClassName('document-content')[0].remove()
   } finally {
     const p = document.createElement('div')
-  p.classList.add('document-content')
-  p.appendChild(document.createTextNode(result))
-  document.getElementsByTagName('body')[0].appendChild(p)
-  console.log(result);
-
+    p.classList.add('document-content')
+    p.appendChild(document.createTextNode(result))
+    document.getElementsByTagName('body')[0].appendChild(p)
+    console.log(result);
   }
-  
-  
-});
- }
+  });
+}
 
 
 </script>
