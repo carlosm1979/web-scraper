@@ -10,12 +10,17 @@
 <body markdown=1>
   <form >
     <div class="mb-3">
-      <input type="text" class="form-control" id="url" >
+      <input type="text" class="form-control" placeholder="Url for getting content" id="url" >
     </div>
     <div class="mb-3">
       <button type="button" class="btn btn-primary" id="get_consent">Get Content</button>
     </div>
   </form>
+  <div class="card">
+    <div class="card-body">
+      <p class="card-text"><div class="content"></div></p>
+    </div>
+  </div>
 <style>
   .document-content{
     white-space: pre-wrap;
@@ -86,7 +91,7 @@ document.getElementsByTagName('input')[0].addEventListener('input', (e) => {
     const p = document.createElement('div')
     p.classList.add('document-content')
     p.appendChild(document.createTextNode(result))
-    document.getElementsByTagName('body')[0].appendChild(p)
+    document.getElementsByClassName('content')[0].appendChild(p)
     navigator.clipboard.writeText(result);
     // console.log(result);
   }
