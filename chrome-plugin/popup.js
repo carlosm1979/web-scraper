@@ -1,8 +1,12 @@
-
+let urlTarget = ''
 document.addEventListener('DOMContentLoaded', function () {
   console.log('DOMContentLoaded');
   let getButton  = document.getElementById('get_consent')
+  let urlInput  = document.getElementById('url')
   getButton.addEventListener("click", async () => {
-    fetch("https://www.google.com").then(r => console.log(r)).catch(() => console.log('error'))
+    fetch(urlTarget).then(r => console.log(r)).catch(() => console.log('error'))
+  });
+  urlInput.addEventListener("input", async (e) => {
+    urlTarget = e.srcElement.value
   });
 });
