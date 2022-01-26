@@ -22,7 +22,7 @@ chrome.runtime.onInstalled.addListener(async () => {
 
 chrome.action.onClicked.addListener(async (tab) => {
   console.log('click action')
-  let url = chrome.runtime.getURL("popup.html");
+  let url = chrome.runtime.getURL("scraper.html");
   await chrome.tabs.create({ url });
   // fetch("https://www.google.com").then(r => console.log(r)).catch(() => console.log('error'))
 });
