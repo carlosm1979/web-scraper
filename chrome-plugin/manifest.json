@@ -1,6 +1,6 @@
 {
-  "name":"ejemplo plugin",
-  "description":"aprendiendo a programar un plugin",
+  "name":"Web scraper",
+  "description":"Get web content",
   "version": "1.0",
   "manifest_version": 3,
   "background": {
