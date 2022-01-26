@@ -6,7 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
   getButton.addEventListener("click", async () => {
     fetch(urlTarget).then(r => console.log(r)).catch(() => console.log('error'))
   });
-  urlInput.addEventListener("input", async (e) => {
-    urlTarget = e.srcElement.value
-  });
+  registerInputEvent(urlInput);
 });
+function registerInputEvent(urlInput) {
+  urlInput.addEventListener("input", async (e) => {
+    urlTarget = e.srcElement.value;
+  });
+}
+
