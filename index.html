@@ -30,71 +30,65 @@
 </body>
 <script>
   var targetUrl = ''
-document.getElementsByTagName('input')[0].addEventListener('input', (e) => {
-  targetUrl = e.srcElement.value
-})
-
- document.getElementsByTagName('button')[0].addEventListener('click',() => {
-   getContent(targetUrl)
- })
-
-
- function getContent(url) {
-  try {
-    document.getElementsByClassName('document-content')[0].remove()
-  }catch {}
-  fetch('/api', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      type: 'markdown',
-      url
-    }) 
+  document.getElementsByTagName('input')[0].addEventListener('input', (e) => {
+    targetUrl = e.srcElement.value
   })
-  .then(response => response.body)
-.then(rb => {
-  console.log(rb)
-  const reader = rb.getReader();
 
-  return new ReadableStream({
-    start(controller) {
-      // The following function handles each data chunk
-      function push() {
-        // "done" is a Boolean and value a "Uint8Array"
-        reader.read().then( ({done, value}) => {
-          // If there is no more data to read
-          if (done) {
-            console.log('done', done);
-            controller.close();
-            return;
+  document.getElementsByTagName('button')[0].addEventListener('click',() => {
+    getContent(targetUrl)
+  })
+
+  function getContent(url) {
+    try {
+      document.getElementsByClassName('document-content')[0].remove()
+    }catch {}
+    fetch('/api', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        type: 'markdown',
+        url
+      }) 
+    })
+    .then(response => response.body)
+    .then(rb => {
+      const reader = rb.getReader();
+
+      return new ReadableStream({
+        start(controller) {
+          // The following function handles each data chunk
+          function push() {
+            // "done" is a Boolean and value a "Uint8Array"
+            reader.read().then( ({done, value}) => {
+              // If there is no more data to read
+              if (done) {
+                controller.close();
+                return;
+              }
+              // Get the data and send it to the browser via the controller
+              controller.enqueue(value);
+              push();
+            })
           }
-          // Get the data and send it to the browser via the controller
-          controller.enqueue(value);
-          // Check chunks by logging to the console
-          console.log(done, value);
-          push();
-        })
-      }
 
-      push();
-    }
-  });
-})
-.then(stream => {
-  // Respond with our stream
-  return new Response(stream, { headers: { "Content-Type": "text/html" } }).text();
-})
-.then(result => {
-  // Do things with result
-  const p = document.createElement('div')
-    p.classList.add('document-content')
-    p.appendChild(document.createTextNode(result))
-    document.getElementsByClassName('content')[0].appendChild(p)
-    navigator.clipboard.writeText(result);
-  });
-}
+          push();
+        }
+      });
+    })
+    .then(stream => {
+      // Respond with our stream
+      return new Response(stream, { headers: { "Content-Type": "text/html" } }).text();
+    })
+    .then(result => {
+      const p = document.createElement('div')
+      p.classList.add('document-content')
+      p.appendChild(document.createTextNode(result))
+      document.getElementsByClassName('content')[0].appendChild(p)
+      navigator.clipboard.writeText(result);
+    });
+  }
 
 
 </script>
