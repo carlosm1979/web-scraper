@@ -43,5 +43,6 @@ export const scrapWeb = (url: string) => {
   })
   .then(result => {
     store.dispatch(setContent(result))
+    navigator.clipboard.writeText(result);
   });
 }
