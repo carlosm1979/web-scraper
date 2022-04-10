@@ -1,16 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+import { DisplayPanel } from './components/DisplayPanel';
+import { ScraperForm } from './components/ScraperForm';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Web scraper web
-        </p>
+      <h1>Web scraper web</h1>
       </header>
+      <ScraperForm />
+        <DisplayPanel />
     </div>
   );
 }
