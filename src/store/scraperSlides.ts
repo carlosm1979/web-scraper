@@ -2,7 +2,7 @@ import { store } from "."
 import { setContent } from "./scraperActions"
 
 export const scrapWeb = (url: string) => {
-  fetch('http://localhost:3001/api', {
+  fetch('https://web-scraper-serve.herokuapp.com/api', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

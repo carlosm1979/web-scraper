@@ -10,7 +10,7 @@ export const ScraperForm = () => {
   }
   const onClick = () => {
     console.warn(url)
-    store.dispatch(scrapWeb(url))
+    scrapWeb(url)
   }
 
   return (<div>
