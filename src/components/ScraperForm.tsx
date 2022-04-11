@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { loginWithGoogle } from "../store/firebase/firebaseSlides";
 import { scrapWeb } from "../store/scraperSlides";
 
 export const ScraperForm = () => {
@@ -12,8 +13,13 @@ export const ScraperForm = () => {
     scrapWeb(url)
   }
 
+  const onLogin = () => {
+    loginWithGoogle()
+  }
+
   return (<>
     <input type="text" onChange={onChange} placeholder="Url for getting content"></input>
-    <button type="button" onClick={onClick} id="get_consent">Get Content</button>
+    <button type="button" onClick={onClick} >Get Content</button>
+    <button type="button" onClick={onLogin} >Login</button>
   </>)
 }
