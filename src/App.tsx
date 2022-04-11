@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <h1>Web scraper web</h1>
+      <h1>Web scraper</h1>
       </header>
       <ScraperForm />
         <DisplayPanel />
