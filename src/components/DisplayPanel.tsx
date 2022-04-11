@@ -1,11 +1,7 @@
-import { useState } from "react";
-import { store } from "../store";
+import { useScraperStore } from "../store";
 
 export const DisplayPanel = () => {
-  const [content, setContent] = useState(''); 
-  store.subscribe(() => {
-    setContent(store.getState().content)
-  })
+  const { content } = useScraperStore()
 
   return (<div>{content}</div>)
 }

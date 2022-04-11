@@ -1,4 +1,4 @@
-const initialState = { content: 'teswt'}
+const initialState = { content: ''}
 
 export const scraperReducer = (state = initialState, action: any) => {
 
