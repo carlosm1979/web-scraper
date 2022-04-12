@@ -13,7 +13,6 @@ export const firebaseConfig = {
 };
 
 export const startFirebase = () => {
-  console.warn(process.env)
   initializeApp(firebaseConfig);
 }
 
