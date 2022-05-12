@@ -42,7 +42,7 @@ export const scrapWeb = (url: string) => {
     return new Response(stream, { headers: { "Content-Type": "text/html" } }).text();
   })
   .then(result => {
-    store.dispatch(setContent(result))
-    navigator.clipboard.writeText(result);
+    store.dispatch(setContent(JSON.parse(result).content))
+    navigator.clipboard.writeText(JSON.parse(result).content);
   });
 }
